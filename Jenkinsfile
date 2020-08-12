@@ -26,14 +26,15 @@ pipeline {
               image 'gradle:jdk11'
             }
           }
+          when {
+            beforeAgent true
+            branch 'master'
+          }
           steps {
             unstash 'code'
             sh 'ci/build-app.sh'
-			stash 'build'
             archiveArtifacts 'app/build/libs/'
-            sh 'ls'
-            deleteDir()
-            sh 'ls'
+            stash 'build'
           }
         }
 
