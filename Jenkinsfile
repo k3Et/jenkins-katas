@@ -76,7 +76,7 @@ pipeline {
     stage('Master branch build') {
       when { 
         not {
-          branch "dev/"    
+          branch "dev/*"    
         }
       }
         steps {
