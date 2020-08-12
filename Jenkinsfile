@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    DOCKERCREDS = credentials('docker_login')
+  }
   stages {
     stage('clone down') {
         agent {
@@ -49,6 +52,15 @@ pipeline {
 
       }
     }
+
+	stage('push docker app') {
+	  steps {
+		unstash 'code'
+		sh 'ci/build-docker.sh'
+		sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
+		sh 'ci/push-docker.sh'
+	  }
+	}
 
     stage('post step') {
       steps {
