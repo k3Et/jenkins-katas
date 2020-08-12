@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    docker_username=k3Et
+    docker_username='k3Et'
   }
   stages {
     stage('clone down') {
