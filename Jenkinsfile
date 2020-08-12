@@ -52,7 +52,6 @@ pipeline {
 
       }
     }
-
 	stage('push docker app') {
 	    environment {
 		DOCKERCREDS = credentials('docker_login')
@@ -65,7 +64,6 @@ pipeline {
 	  }
 	  
 	}
-
     stage('post step') {
       steps {
         deleteDir()
