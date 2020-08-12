@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    DOCKERCREDS = credentials('docker_login')
+    docker_username=k3Et
   }
   stages {
     stage('clone down') {
@@ -54,12 +54,16 @@ pipeline {
     }
 
 	stage('push docker app') {
+	    environment {
+		DOCKERCREDS = credentials('docker_login')
+		}
 	  steps {
 		unstash 'code'
 		sh 'ci/build-docker.sh'
 		sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
 		sh 'ci/push-docker.sh'
 	  }
+	  
 	}
 
     stage('post step') {
