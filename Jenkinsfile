@@ -69,6 +69,11 @@ pipeline {
         deleteDir()
       }
     }
-
+    stage('Master branch build') {
+      when { branch "master"}
+      steps {
+        sh 'Echo "On master branch"'
+      }
+    }
   }
 }
