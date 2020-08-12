@@ -30,6 +30,7 @@ pipeline {
           steps {
             unstash 'code'
             sh 'ci/build-app.sh'
+			stash 'build'
             archiveArtifacts 'app/build/libs/'
             sh 'ls'
             deleteDir()
@@ -58,7 +59,7 @@ pipeline {
 		DOCKERCREDS = credentials('docker_login')
 		}
 	  steps {
-		unstash 'code'
+		unstash 'build'
 		sh 'ci/build-docker.sh'
 		sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
 		sh 'ci/push-docker.sh'
