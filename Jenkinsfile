@@ -60,7 +60,7 @@ pipeline {
 	  steps {
 		unstash 'build'
 		sh 'ci/build-docker.sh'
-		sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
+		sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-$DOCKERCREDS_PSW'
 		sh 'ci/push-docker.sh'
 	  }
 	  
