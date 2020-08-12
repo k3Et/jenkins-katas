@@ -26,7 +26,6 @@ pipeline {
               image 'gradle:jdk11'
             }
           }
-
           steps {
             unstash 'code'
             sh 'ci/build-app.sh'
