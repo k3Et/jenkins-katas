@@ -25,18 +25,19 @@ pipeline {
           }
         }
 
-        stage('clone down') {
-          agent {
-            node {
-              label 'Host'
-            }
-
-          }
+        stage('test app') {
           steps {
-            stash(name: 'code', excludes: '.git')
+            sh 'ci/unit-test-app.sh'
+            sh 'junit \'app/build/test-results/test/TEST-*.xml\''
           }
         }
 
+      }
+    }
+
+    stage('post step') {
+      steps {
+        deleteDir()
       }
     }
 
