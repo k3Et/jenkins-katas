@@ -77,6 +77,7 @@ pipeline {
         not {
           branch "dev/"    
         }
+      }
         steps {
           sh 'ci/component-test.sh'
         }
