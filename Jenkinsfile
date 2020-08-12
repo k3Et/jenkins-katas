@@ -53,8 +53,9 @@ pipeline {
       }
     }
 	stage('push docker app') {
-	    environment {
-		DOCKERCREDS = credentials('docker_login')
+	  when { branch "master" }
+    environment {
+		  DOCKERCREDS = credentials('docker_login')
 		}
 	  steps {
 		unstash 'build'
@@ -70,10 +71,14 @@ pipeline {
       }
     }
     stage('Master branch build') {
-      when { branch "master"}
-      steps {
-        sh 'Echo "On master branch"'
-      }
+      when { 
+        not {
+          branch "dev/"    
+        }
+        steps {
+          sh 'ci/component-test.sh'
+        }
+        }
     }
   }
 }
