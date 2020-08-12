@@ -80,8 +80,9 @@ pipeline {
         }
       }
         steps {
+          unstash 'code'
           sh 'ci/component-test.sh'
-        }
         }
     }
   }
+}
